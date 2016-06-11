@@ -1,0 +1,42 @@
+{% extends "c_base.html" %}
+{% load staticfiles %}
+{% block content %}
+
+<!-- Page Content -->
+
+<div id="page-wrapper">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-12">
+				{% load username %}
+				<h1 class="page-header text-primary">Сайты клиента <strong>{% client_rus_name username %}</strong></h1>
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						Ремарка
+					</div>
+					<div class="panel-body">
+						<p>В настоящий момент управление доменами не функционирует, поэтому dns-записи нужно будет прописать вручную.</p>
+						<p>К примеру, в записи зоны своего домена добавьте:</p>
+						<p><ваш домен>.ru CNAME orsklab.ru</p>
+					</div>
+					<!--<div class="panel-footer">
+						Panel Footer
+					</div>-->
+				</div>
+				{% if sites %}
+					<ul>
+						{% for s in sites %}
+							<li>{{ s }}</li>
+						{% endfor %}
+					</ul>
+				{% endif %}
+			</div>
+			<!-- /.col-lg-12 -->
+		</div>
+		<!-- /.row -->
+	</div>
+	<!-- /.container-fluid -->
+</div>
+<!-- /#page-wrapper -->
+
+{% endblock %}

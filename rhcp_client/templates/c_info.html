@@ -1,0 +1,326 @@
+{% extends "c_base.html" %}
+{% load staticfiles %}
+{% block content %}
+
+<!-- Page Content -->
+<div id="page-wrapper">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-12">
+				{% load username %}
+				<h1 class="page-header text-primary">Данные клиента <strong>{% client_rus_name username %}</strong></h1>
+			</div>
+			<!-- /.col-lg-12 -->
+		</div>
+		<!-- /.row -->
+		
+		<div class="row">
+			<div class="col-lg-12">
+				<p><span class="fa fa-warning text-primary"></span>
+				Клиент зарегистрирован как 
+				<strong>
+					{% if c.client_type == 'MAN' %}физическое лицо{%  endif %}
+					{% if c.client_type == 'IND' %}индивидуальный предприниматель{%  endif %}
+					{% if c.client_type == 'ORG' %}юридическое лицо{%  endif %}
+				</strong>
+				</p>
+				<p>&nbsp;</p>
+				<form role="form" method="POST" action={% url 'c_info' %}>
+				{% csrf_token %}
+				<!-- ORG -->
+				{% if c.client_type == 'ORG' %}
+					<div class="row">
+						<div class="col-lg-6">
+							<input name="rus_name" class="form-control" {% if c.rus_name %} value="{{ c.rus_name }}" {% endif %}>
+						</div>
+						<div class="col-lg-6">
+							<label>Наименование</label>
+							<p class="help-block">Пример: <i><strong>Иванов Иван Иванович</strong></i></p>
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<input name="eng_name" class="form-control" {% if c.eng_name %} value="{{ c.eng_name }}" {% endif %}>
+						</div>
+						<div class="col-lg-6">
+							<label>Наименование по-английски</label>
+							<p class="help-block">Пример: <i><strong>Ivanov Ivan Ivanovich</strong></i></p>
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<input name="chief_name" class="form-control" {% if c.chief_name %} value="{{ c.chief_name }}" {% endif %}>
+						</div>
+						<div class="col-lg-6">
+							<label>Ф.И.О. руководителя</label>
+							<p class="help-block">Пример: <i><strong>12 34 №567890 выдан ОВД Кировского района г. Ессентуки 24.12.2000</strong></i></p>
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<input name="jur_address" class="form-control" {% if c.jur_address %} value="{{ c.jur_address }}" {% endif %}>
+						</div>
+						<div class="col-lg-6">
+							<label>Юридический адрес</label>
+							<p class="help-block">Пример: <i><strong>12.04.1980</strong></i></p>
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<input name="post_address" class="form-control" {% if c.post_address %} value="{{ c.post_address }}" {% endif %}>
+						</div>
+						<div class="col-lg-6">
+							<label>Почтовый адрес администратора</label>
+							<p class="help-block">Пример: <i><strong>123456, г. Киров, ул. Светлая, д. 14, к. 2, кв. 123</strong></i></p>
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<textarea name="phones" class="form-control" rows="3">{% if c.phones %}{{ c.phones }}{% endif %}</textarea>
+						</div>
+						<div class="col-lg-6">
+							<label>Телефоны администратора</label>
+							<p class="help-block">Пример: <i><strong>123456, г. Киров, ул. Светлая, д. 14, к. 2, кв. 123</strong></i></p>
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<textarea name="faxes" class="form-control" rows="3">{% if c.faxes %}{{ c.faxes }}{% endif %}</textarea>
+						</div>
+						<div class="col-lg-6">
+							<label>Факсы администратора</label>
+							<p class="help-block">Пример: <i><strong>123456, г. Киров, ул. Светлая, д. 14, к. 2, кв. 123</strong></i></p>
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<textarea name="emails" class="form-control" rows="3">{% if c.emails %}{{ c.emails }}{% endif %}</textarea>
+						</div>
+						<div class="col-lg-6">
+							<label>Адреса электронной почты администратора</label>
+							<p class="help-block">Пример: <i><strong>123456, г. Киров, ул. Светлая, д. 14, к. 2, кв. 123</strong></i></p>
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<input name="inn" class="form-control" {% if c.inn %} value="{{ c.inn }}" {% endif %}>
+						</div>
+						<div class="col-lg-6">
+							<label>ИНН</label>
+							<p class="help-block">Пример: <i><strong>123456789012</strong></i></p>
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<input name="kpp" class="form-control" {% if c.kpp %} value="{{ c.kpp }}" {% endif %}>
+						</div>
+						<div class="col-lg-6">
+							<label>КПП</label>
+							<p class="help-block">Пример: <i><strong>123456789012</strong></i></p>
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<input name="ogrn" class="form-control" {% if c.ogrn %} value="{{ c.ogrn }}" {% endif %}>
+						</div>
+						<div class="col-lg-6">
+							<label>ОГРН</label>
+							<p class="help-block">Пример: <i><strong>123456789012</strong></i></p>
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<label class="checkbox-inline">
+								<input name="resident" type="checkbox" {% if c.resident %}{% if c.resident %}checked{% endif %}{% endif %}>Резидент РФ
+							</label>
+						</div>
+						<div class="col-lg-6">
+							<label>Фвляется ли клиент резидентом РФ</label>
+							<p class="help-block">Пример: <i><strong>Резидент РФ</strong></i></p>
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<input name="bank" class="form-control" {% if c.bank %} value="{{ c.bank }}" {% endif %}>
+						</div>
+						<div class="col-lg-6">
+							<label>Банк</label>
+							<p class="help-block">Пример: <i><strong>123456789012</strong></i></p>
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<input name="bik" class="form-control" {% if c.bik %} value="{{ c.bik }}" {% endif %}>
+						</div>
+						<div class="col-lg-6">
+							<label>Бик</label>
+							<p class="help-block">Пример: <i><strong>123456789012</strong></i></p>
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<input name="ks" class="form-control" {% if c.ks %} value="{{ c.ks }}" {% endif %}>
+						</div>
+						<div class="col-lg-6">
+							<label>Корреспондентский счёт</label>
+							<p class="help-block">Пример: <i><strong>123456789012</strong></i></p>
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<input name="rs" class="form-control" {% if c.rs %} value="{{ c.rs }}" {% endif %}>
+						</div>
+						<div class="col-lg-6">
+							<label>Расчётный счёт</label>
+							<p class="help-block">Пример: <i><strong>123456789012</strong></i></p>
+							<p>&nbsp;</p>
+						</div>
+					</div>
+				{% else %}
+				<!-- End of ORG -->
+				<!-- MAN or IND -->
+					<div class="row">
+						<div class="col-lg-6">
+							<input name="rus_name" class="form-control" {% if c.rus_name %} value="{{ c.rus_name }}" {% endif %}>
+						</div>
+						<div class="col-lg-6">
+							<label>ФИО администратора</label>
+							<p class="help-block">Пример: <i><strong>Иванов Иван Иванович</strong></i></p>
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<input name="eng_name" class="form-control" {% if c.eng_name %} value="{{ c.eng_name }}" {% endif %}>
+						</div>
+						<div class="col-lg-6">
+							<label>ФИО администратора по-английски</label>
+							<p class="help-block">Пример: <i><strong>Ivanov Ivan Ivanovich</strong></i></p>
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<input name="passport" class="form-control" {% if c.passport %} value="{{ c.passport }}" {% endif %}>
+						</div>
+						<div class="col-lg-6">
+							<label>Паспортные данные администратора</label>
+							<p class="help-block">Пример: <i><strong>12 34 №567890 выдан ОВД Кировского района г. Ессентуки 24.12.2000</strong></i></p>
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<input name="date_born" class="form-control" {% if c.date_born %} value="{{ c.date_born }}" {% endif %}>
+						</div>
+						<div class="col-lg-6">
+							<label>Дата рождения администратора</label>
+							<p class="help-block">Пример: <i><strong>12.04.1980</strong></i></p>
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<input name="post_address" class="form-control" {% if c.post_address %} value="{{ c.post_address }}" {% endif %}>
+						</div>
+						<div class="col-lg-6">
+							<label>Почтовый адрес администратора</label>
+							<p class="help-block">Пример: <i><strong>123456, г. Киров, ул. Светлая, д. 14, к. 2, кв. 123</strong></i></p>
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<textarea name="phones" class="form-control" rows="3">{% if c.phones %}{{ c.phones }}{% endif %}</textarea>
+						</div>
+						<div class="col-lg-6">
+							<label>Телефоны администратора</label>
+							<p class="help-block">Пример: <i><strong>123456, г. Киров, ул. Светлая, д. 14, к. 2, кв. 123</strong></i></p>
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<textarea name="faxes" class="form-control" rows="3">{% if c.faxes %}{{ c.faxes }}{% endif %}</textarea>
+						</div>
+						<div class="col-lg-6">
+							<label>Факсы администратора</label>
+							<p class="help-block">Пример: <i><strong>123456, г. Киров, ул. Светлая, д. 14, к. 2, кв. 123</strong></i></p>
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<textarea name="emails" class="form-control" rows="3">{% if c.emails %}{{ c.emails }}{% endif %}</textarea>
+						</div>
+						<div class="col-lg-6">
+							<label>Адреса электронной почты администратора</label>
+							<p class="help-block">Пример: <i><strong>123456, г. Киров, ул. Светлая, д. 14, к. 2, кв. 123</strong></i></p>
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<input name="inn" class="form-control" {% if c.inn %} value="{{ c.inn }}" {% endif %}>
+						</div>
+						<div class="col-lg-6">
+							<label>ИНН</label>
+							<p class="help-block">Пример: <i><strong>123456789012</strong></i></p>
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6">
+							<label class="checkbox-inline">
+								<input name="resident" type="checkbox" {% if c.resident %}{% if c.resident %}checked{% endif %}{% endif %}>Резидент РФ
+							</label>
+						</div>
+						<div class="col-lg-6">
+							<label>Фвляется ли клиент резидентом РФ</label>
+							<p class="help-block">Пример: <i><strong>Резидент РФ</strong></i></p>
+							<p>&nbsp;</p>
+						</div>
+					</div>
+				{% endif %}
+				<!-- End of MAN or IND -->
+
+					<div class="row">
+						<div class="col-lg-12">
+							<button type="submit" class="btn btn-outline btn-primary">Сохранить</button>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<p>&nbsp;</p>
+						</div>
+					</div>
+					<!--<button type="reset" class="btn btn-default">Reset Button</button>-->
+				</form>
+			</div>
+			<!-- /.col-lg-12 -->
+		</div>
+		<!-- /.row -->
+		
+
+		
+	</div>
+	<!-- /.container-fluid -->
+</div>
+<!-- /#page-wrapper -->
+
+{% endblock %}
